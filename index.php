@@ -80,11 +80,12 @@ include('./include/connect.php');
           <!-- Fourth child -->
           <div class="row">
             <!-- HTML for left side menu -->
+            <!-- 'col-md-2' is 2 parts out of 12 part -->
             <div class="col-md-2 bg-secondary p-0">
               <!-- ul for brands to be fetched from DB and to be displayed -->
               <ul class="navbar-nav me-auto text-center">
                   <li class="nav-item bg-info">
-                    <a class="nav-link text-light" href="#">Delivery Brands</a>
+                    <a class="nav-link text-light" href="#"> <b>DELIVERY BRANDS</b> </a>
                   </li>
 
                   <!-- to display the brands from database to the main home page brand menu -->
@@ -105,7 +106,7 @@ include('./include/connect.php');
               <!-- ul for categories to be fetched from DB and to be displayed -->
               <ul class="navbar-nav me-auto text-center">
                   <li class="nav-item bg-info">
-                    <a class="nav-link text-light" href="#">Categories</a>
+                    <a class="nav-link text-light" href="#"><b>CATEGORIES</b></a>
                   </li>
                   <!-- to display the categories from database to the main home page category menu -->
                   <?php
@@ -121,94 +122,47 @@ include('./include/connect.php');
                   ?>
 
               </ul>
-            <!-- HTML for cards  -->
+            
             </div>
-            <div class="col-md-10">
-               <div class="row">
-                <!-- card starts -->
-                <div class="col-md-3 mb-2">
-                  <div class="card" >
-                    <img src="./images/snacks/oreo.jpg" id="card_image" class="card-img-top"  alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">OREO</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-info">Add to cart</a>
-                      <a href="#" class="btn btn-secondary">View more</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Card ends -->
 
-                <!-- card starts -->
-                <div class="col-md-3 mb-2">
-                  <div class="card" >
-                    <img src="./images/snacks/lays.jpg" id="card_image" class="card-img-top"  alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">LAYS</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-info">Add to cart</a>
-                      <a href="#" class="btn btn-secondary">View more</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Card ends -->
 
-                <!-- card starts -->
-                <div class="col-md-3 mb-2">
-                  <div class="card " >
-                    <img src="./images/snacks/tiger.jpg"  id="card_image" class="card-img-top p-4"  alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">TIGER BISCUIT</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-info">Add to cart</a>
-                      <a href="#" class="btn btn-secondary">View more</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Card ends -->
+            <!-- HTML for cards  -->
+               
+            <div class="col-md-10">   <!-- 'col-md-10' is 10 parts out of 12 part -->
+              <div class="row">
+                  <!-- Fetching products from database to homepage cards-->
+                  <?php
+                  $select_query="select * from `products` order by rand() limit 0,9 "; 
+                  //order by product_title -- arranges the cards in order based on title
+                  //order by rand() -- random order
+                  //order by rand() limit 0,5 -- random order that displays only 5 products
+                  $result_query=mysqli_query($con, $select_query);
 
-                <!-- card starts -->
-                <div class="col-md-3 mb-2">
-                  <div class="card" >
-                    <img src="./images/snacks/maggi.jpg" id="card_image" class="card-img-top p-4"  alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">MAGGI</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-info">Add to cart</a>
-                      <a href="#" class="btn btn-secondary">View more</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Card ends -->
+                  while($row=mysqli_fetch_assoc($result_query)){
+                    $product_id=$row['product_id'];
+                    // For Eg: 'product_id' is the column name in the database
+                    $product_title=$row['product_title'];
+                    $product_description=$row['product_description'];
+                    $product_image1=$row['product_image_1'];
+                    $product_category_id=$row['category_id'];
+                    $product_brand_id=$row['brand_id'];
+                    $product_price=$row['product_price'];
 
-                <!-- card starts -->
-                <div class="col-md-3 mb-2">
-                  <div class="card" >
-                    <img src="./images/snacks/mixture.jpg" id="card_image" class="card-img-top p-4"  alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">MIXTURE</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-info">Add to cart</a>
-                      <a href="#" class="btn btn-secondary">View more</a>
+                    echo "<div class='col-md-3 mb-2'>
+                    <div class='card' >
+                      <img src='./admin_space/product_images/$product_image1' id='card_image' class='card-img-top'  alt='$product_title'>
+                      <div class='card-body'>
+                        <h5 class='card-title'>$product_title</h5>
+                        <p class='card-text'>$product_description</p>
+                        <a href='#' class='btn btn-info'>Add to cart</a>
+                        <a href='#' class='btn btn-secondary'>View more</a>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <!-- Card ends -->
+                  </div>";
+                  }
+                  ?>
 
-                <!-- card starts -->
-                <div class="col-md-3 mb-2">
-                  <div class="card" >
-                    <img src="./images/snacks/jam.jpg" id="card_image" class="card-img-top p-4"  alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">KISSAN JAM</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-info">Add to cart</a>
-                      <a href="#" class="btn btn-secondary">View more</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Card ends -->
-               </div>
+              </div>
             </div>
           </div>
 
