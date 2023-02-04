@@ -28,9 +28,24 @@ if(isset($_POST['insert_product'])){
 
 
 
-     //Checking empty conditions
-     if($product_title='' or $product_description='' or $product_keywords='' or $Product_category='' or
-        $Product_brand='' or $product_price='' ){
+
+    $product_title_query="Select * from `products` where product_title='$product_title'";
+    $result_product_title=mysqli_query($con, $product_title_query);
+    $product_number=mysqli_num_rows($result_product_title);
+
+    // $product_description_query= "Select * from `products` where product_title='$product_description'";
+    // $result_product_description = mysqli_query
+
+
+   
+
+
+    if($product_number >0){
+        echo "<script>alert('This product is already present inside the database')</script>";
+    }else{
+        //Checking empty conditions
+        if($product_title=='' or $product_description=='' or $product_keywords=='' or $product_category=='' or
+        $product_brand=='' or $product_price=='' ){
             echo "<script>alert('Empty fields must be filled!')</script>";
             exit();
         }else{
@@ -40,7 +55,7 @@ if(isset($_POST['insert_product'])){
 
             //insert query
                 //for getting the exact date, NOW() function is used
-            $insert_products="INSERT INTO `products` (product_title,product_description,product_keyword,category_id,brand_id,product_image_1,product_image_2,product_image_3,product_price,date,status) VALUES ('$product_title','$product_description','$product_keywords','$product_category','$product_brand','$product_image1','$product_image2','$product_image3','$product_price',NOW(),$product_status')";
+            $insert_products="INSERT INTO `products` (product_title,product_description,product_keyword,category_id,brand_id,product_image_1,product_image_2,product_image_3,product_price,date,status) VALUES ('$product_title','$product_description','$product_keywords','$product_category','$product_brand','$product_image1','$product_image2','$product_image3','$product_price',NOW(),'$product_status')";
 
             $result=mysqli_query($con, $insert_products);
 
@@ -48,6 +63,8 @@ if(isset($_POST['insert_product'])){
                 echo "<script>alert('Product has been stored to the database')</script>";
             }
         }
+    }
+     
 }
 ?>
 
